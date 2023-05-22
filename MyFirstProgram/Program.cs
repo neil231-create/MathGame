@@ -2,6 +2,7 @@
 using System;
 
 // global variables
+// hello!
 string name = GetName();
 DateTime date = DateTime.UtcNow;
 
