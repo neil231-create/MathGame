@@ -1,9 +1,13 @@
 ﻿// See https://aka.ms/new-console-template for more information
 using System;
+using static System.Formats.Asn1.AsnWriter;
 
 // global variables
 // hello!
 string name = GetName();
+var games = new List<string>();
+
+
 DateTime date = DateTime.UtcNow;
 
 Menu(name, date);
@@ -19,41 +23,65 @@ string GetName()
 
 void Menu(string name, DateTime date)
 {
-    Console.WriteLine("--------------------------------------------");
+
+    bool isGameOn = true;
+
     Console.WriteLine($"Hello {name.ToUpper()}. It's {date.DayOfWeek}. This is your match game. That's great that you're working on improving yourself");
-    Console.WriteLine(@$"What game would you like to play today? Choose from the option below: 
-A - Addition
-S - Subtraction
-M - Multiplication
-D - Division
-Q - Quit");
-    Console.WriteLine("--------------------------------------------");
-
-    var gameSelected = Console.ReadLine();
-
-    switch (gameSelected.Trim().ToLower())
+    do
     {
-        case "a":
-            AdditionGame("Addition game selected");
-            break;
-        case "s":
-            SubtractionGame("Subtraction game selected");
-            break;
-        case "m":
-            MultiplicationGame("Multiplication game selected");
-            break;
-        case "d":
-            DivisonGame("Division game selected");
-            break;
-        case "q":
-            Console.WriteLine("Goodbye");
-            break;
-        default:
-            Console.WriteLine("Invalid input");
-            Environment.Exit(1);
-            break;
-    }
+    
+        Console.WriteLine("--------------------------------------------");
+        
+        Console.WriteLine(@$"What game would you like to play today? Choose from the option below: 
+                        A - Addition
+                        S - Subtraction
+                        M - Multiplication
+                        D - Division
+                        Q - Quit
+                        V - Game History");
+        Console.WriteLine("--------------------------------------------");
+        var gameSelected = Console.ReadLine();
 
+        switch (gameSelected.Trim().ToLower())
+        {
+            case "v":
+                GetGames();
+                break;
+            case "a":
+                AdditionGame("Addition game selected");
+                break;
+            case "s":
+                SubtractionGame("Subtraction game selected");
+                break;
+            case "m":
+                MultiplicationGame("Multiplication game selected");
+                break;
+            case "d":
+                DivisonGame("Division game selected");
+                break;
+            case "q":
+                Console.WriteLine("Goodbye");
+                isGameOn = false;
+                break;
+            default:
+                Console.WriteLine("Invalid input");
+                break;
+        }
+    } while (isGameOn);
+    
+}
+
+void GetGames()
+{   
+    Console.Clear();
+    Console.WriteLine("Games history");
+    Console.WriteLine("-----------------------");
+    foreach (var game in games)
+    {
+        Console.WriteLine(game);
+    }
+    Console.WriteLine("-----------------------\n");
+    Console.WriteLine("Games history");
 }
 
 void AdditionGame(string message)
@@ -74,7 +102,6 @@ void AdditionGame(string message)
         Console.WriteLine($"{firstNumber} + {secondNumber}");
         var result = Console.ReadLine();
 
-
         if (int.Parse(result) == firstNumber + secondNumber)
         {
             Console.WriteLine("Your answer was correct");
@@ -88,6 +115,8 @@ void AdditionGame(string message)
 
 
     }
+
+    games.Add($"{DateTime.Now} - Addition: Score = {score}");
      
 }
 
@@ -158,21 +187,15 @@ void MultiplicationGame(string message)
 void DivisonGame(string message)
 {
     Console.WriteLine(message);
-    Console.WriteLine("Five tries only");
-    var random = new Random();
-    int score = 0;
-
-    int firstNumber;
-    int secondNumber;
-
-    for (int i = 0; i < 5; i++)
+    for( int i = 0; i<5; i++)
     {
-        firstNumber = random.Next(1, 9);
-        secondNumber = random.Next(1, 9);
-
+        int[] divisionNumbers = GetDivisionNumbers();
+        int firstNumber = divisionNumbers[0];
+        int secondNumber = divisionNumbers[1];
         Console.WriteLine($"{firstNumber} / {secondNumber}");
-        var result = Console.ReadLine();
 
+        var result = Console.ReadLine();
+        int score = 0;
 
         if (int.Parse(result) == firstNumber / secondNumber)
         {
@@ -187,3 +210,28 @@ void DivisonGame(string message)
     }
 }
 
+int[] GetDivisionNumbers()
+{
+    
+    Random random = new Random();
+    
+    int firstNumber = random.Next(0, 99);
+    int secondNumber = random.Next(0, 99);
+
+    int[] result = new int[2];
+
+    while (firstNumber % secondNumber != 0)
+    {
+        firstNumber = random.Next(1, 99);
+        secondNumber = random.Next(1, 99);
+    }
+
+    result[0] = firstNumber;
+    result[1] = secondNumber;
+
+   
+
+    Console.WriteLine(result);
+
+    return result;
+}
