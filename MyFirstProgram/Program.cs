@@ -6,7 +6,7 @@ using MyFirstProgram;
 // global variables
 // hello!
 
-string name = GetName();
+string name = Helpers.GetName();
 var games = new List<string>();
 
 Menu menu = new Menu();
@@ -17,12 +17,7 @@ DateTime date = DateTime.UtcNow;
 
 
 // methods
-string GetName()
-{
-    Console.WriteLine("Please Type your Name: ");
-    string name = Console.ReadLine();
-    return name;
-} 
+
 
 
 

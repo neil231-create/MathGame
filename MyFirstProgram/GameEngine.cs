@@ -19,6 +19,7 @@
 
                 Console.WriteLine($"{firstNumber} + {secondNumber}");
                 var result = Console.ReadLine();
+                result = Helpers.Validate(result);
 
                 if (int.Parse(result) == firstNumber + secondNumber)
                 {
@@ -47,6 +48,7 @@
 
             int firstNumber;
             int secondNumber;
+            
 
             for (int i = 0; i < 5; i++)
             {
@@ -55,6 +57,7 @@
 
                 Console.WriteLine($"{firstNumber} - {secondNumber}");
                 var result = Console.ReadLine();
+                result = Helpers.Validate(result);
 
 
                 if (int.Parse(result) == firstNumber - secondNumber)
@@ -79,6 +82,7 @@
 
             int firstNumber;
             int secondNumber;
+            
 
             for (int i = 0; i < 5; i++)
             {
@@ -86,7 +90,9 @@
                 secondNumber = random.Next(1, 9);
 
                 Console.WriteLine($"{firstNumber} * {secondNumber}");
+
                 var result = Console.ReadLine();
+                result = Helpers.Validate(result);
 
 
                 if (int.Parse(result) == firstNumber * secondNumber)
@@ -105,6 +111,7 @@
         internal void DivisonGame(string message)
         {
             Console.WriteLine(message);
+
             for (int i = 0; i < 5; i++)
             {
                 int[] divisionNumbers = Helpers.GetDivisionNumbers();
@@ -113,6 +120,7 @@
                 Console.WriteLine($"{firstNumber} / {secondNumber}");
 
                 var result = Console.ReadLine();
+                result = Helpers.Validate(result);
                 int score = 0;
 
                 if (int.Parse(result) == firstNumber / secondNumber)

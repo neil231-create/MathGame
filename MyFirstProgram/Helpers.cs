@@ -43,5 +43,30 @@
 
             return result;
         }
+
+        internal static string? Validate(string? result)
+        {
+            while (string.IsNullOrEmpty(result) || !Int32.TryParse(result, out _))
+            {
+                Console.WriteLine("Your answer needs to be an Integer. Try Again");
+                result = Console.ReadLine();
+            }
+            return result; 
+        }
+
+        internal static string GetName()
+        {
+            Console.WriteLine("Please Type your Name: ");
+            string name = Console.ReadLine();
+           
+
+            while (string.IsNullOrEmpty(name))
+            {   
+                Console.WriteLine("Name cant be empty");
+                name = Console.ReadLine();
+            }
+            return name;
+        }
+
     }
 }
